@@ -27,7 +27,7 @@
 
 
 **Frontend:**
-- [JavaScript] - As Frontend programming language.
+- [TypeScript] - As Frontend programming language.
 - [React] - For Frontend library.
 - [Bootstrap-CSS-framework] - Basic Component-based UI.
 
