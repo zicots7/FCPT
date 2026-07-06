@@ -79,7 +79,7 @@ Follow these steps to get the project running locally on your machine.
 
 - Docker & Docker Compose (Recommended)
 - Kubernetes or Minikube or Kubernetes in Docker Desktop (KIND) (Optional)
-- JavaScript
+- TypeScript
 - React
 - JDK 21 + 
 - Bootstrap CSS framework
@@ -116,7 +116,7 @@ Follow these steps to get the project running locally on your machine.
 * **Spring Boot Invoice Service API Docs:** `http://localhost:8080/api/docs`(coming soon)
 
 
-* **React with JavaScript frontend API Docs:** `http://localhost:8000/api/docs/`(coming soon)
+* **React with TypeScript frontend API Docs:** `http://localhost:8000/api/docs/`(coming soon)
 
 
 
