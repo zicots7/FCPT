@@ -27,7 +27,7 @@
 
 
 **Frontend:**
-- [TypeScript] - As Frontend programming language.
+- [JavaScript] - As Frontend programming language.
 - [React] - For Frontend library.
 - [Bootstrap-CSS-framework] - Basic Component-based UI.
 
@@ -79,7 +79,7 @@ Follow these steps to get the project running locally on your machine.
 
 - Docker & Docker Compose (Recommended)
 - Kubernetes or Minikube or Kubernetes in Docker Desktop (KIND) (Optional)
-- TypeScript
+- JavaScript
 - React
 - JDK 21 + 
 - Bootstrap CSS framework
@@ -94,7 +94,7 @@ Follow these steps to get the project running locally on your machine.
 - Make a .env file and store all the required Parameters and Variables in side that file (Important).
 - Using Docker Compose inside the FCPT where docker-compose.yml file is present [ docker-compose build FCPT:V1 ].
 
-### Installation using Maven for Java Spring Boot and  Node.js NPM for React with TypeScript 
+### Installation using Maven for Java Spring Boot and  Node.js NPM for React with JavaScript 
 
 ```bash
 - Ensure both JDK 17+ and Node.js LTS are installed, along with an IDE like IntelliJ IDEA or VS Code.
@@ -116,7 +116,7 @@ Follow these steps to get the project running locally on your machine.
 * **Spring Boot Invoice Service API Docs:** `http://localhost:8080/api/docs`(coming soon)
 
 
-* **React with TypeScript frontend API Docs:** `http://localhost:8000/api/docs/`(coming soon)
+* **React with JavaScript frontend API Docs:** `http://localhost:8000/api/docs/`(coming soon)
 
 
 
