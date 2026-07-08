@@ -18,7 +18,7 @@ public class ClientsController {
     private final ClientsService clientsService;
 
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping("/register")
+    @PostMapping("/admin/register")
     public ResponseEntity<ClientResponseDTO>register(
             @RequestBody
             @Valid
@@ -28,25 +28,25 @@ public class ClientsController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping("/all")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<ClientResponseDTO>>getClients(){
         return ResponseEntity.ok(clientsService.getClients());
     }
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping("/{logId}")
+    @GetMapping("/admin/{logId}")
     public ResponseEntity<ClientResponseDTO>getClient(@PathVariable Long id){
         return ResponseEntity.ok(clientsService.getClient(id));
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("/delete/{logId}")
+    @DeleteMapping("/admin/delete/{logId}")
     public ResponseEntity<ClientResponseDTO>deleteClient(@PathVariable Long logId){
         clientsService.deleteClient(logId);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/update/{logId}")
+    @PutMapping("/admin/update/{logId}")
     public ResponseEntity<ClientResponseDTO> updateClient(
             @PathVariable Long logId,
             @RequestBody @Valid ClientsRequestDTO request){

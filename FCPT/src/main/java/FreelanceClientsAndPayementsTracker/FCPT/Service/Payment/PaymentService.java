@@ -2,6 +2,7 @@ package FreelanceClientsAndPayementsTracker.FCPT.Service.Payment;
 import FreelanceClientsAndPayementsTracker.FCPT.DAO.Milestone.MilestoneRepository;
 import FreelanceClientsAndPayementsTracker.FCPT.DAO.Payment.PaymentRepository;
 import FreelanceClientsAndPayementsTracker.FCPT.DAO.Projects.ProjectsRepository;
+import FreelanceClientsAndPayementsTracker.FCPT.DTO.Milestone.MilestoneResponseDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Payment.PaymentRequestDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Payment.PaymentResponseDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Milestone.Milestone;
@@ -16,6 +17,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,10 +29,10 @@ public class PaymentService {
     private final MilestoneRepository milestoneRepository;
     private final ProjectsRepository projectsRepository;
 
-    public PaymentResponseDTO getPayment(Long id) {
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("payment does not exist"));
-        return paymentMapper.toResponse(payment);
+    public List<PaymentResponseDTO> getPayment(Long id) {
+        return paymentRepository.findAllByProjectId(id).stream()
+                .map(paymentMapper::toResponse)
+                .toList();
     }
 
     public List<PaymentResponseDTO> getPayments() {

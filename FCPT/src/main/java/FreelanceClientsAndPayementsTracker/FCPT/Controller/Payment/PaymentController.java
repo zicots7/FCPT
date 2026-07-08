@@ -20,19 +20,19 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('client')")
-    @GetMapping("/id/{logId}")
-    public ResponseEntity<PaymentResponseDTO>getPayment(@PathVariable Long id){
-        return ResponseEntity.ok(paymentService.getPayment(id));
+    @GetMapping("/id/{pid}")
+    public ResponseEntity<List<PaymentResponseDTO>>getPayment(@PathVariable Long pid){
+        return ResponseEntity.ok(paymentService.getPayment(pid));
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping("/all")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<PaymentResponseDTO>>getPayments(){
         return ResponseEntity.ok(paymentService.getPayments());
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping("/create")
+    @PostMapping("/admin/create")
     public ResponseEntity<PaymentResponseDTO>createPayment(
             @RequestBody
             @Valid PaymentRequestDTO request
@@ -41,7 +41,7 @@ public class PaymentController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/update/{logId}")
+    @PutMapping("/admin/update/{Id}")
     public ResponseEntity<PaymentResponseDTO>createPayment(
             @PathVariable Long id,
             @RequestBody
@@ -51,7 +51,7 @@ public class PaymentController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("/delete/{logId}")
+    @DeleteMapping("/admin/delete/{Id}")
     public ResponseEntity<PaymentResponseDTO>deletePayment(
             @PathVariable Long id
     ){

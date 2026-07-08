@@ -31,19 +31,19 @@ public ResponseEntity<AccountsResponseDTO>getAccount(@PathVariable Long id){
 
 }
 @PreAuthorize("hasAuthority('admin')")
-@GetMapping("/all")
+@GetMapping("/admin/all")
 public ResponseEntity<List<AccountsResponseDTO>>getAccounts(){
     return ResponseEntity.ok(accountsService.getAccounts());
 
 }
 @PreAuthorize("hasAuthority('admin')")
-@DeleteMapping("/delete/{logId}")
+@DeleteMapping("/admin/delete/{logId}")
     public ResponseEntity<AccountsResponseDTO>deleteAccount(@PathVariable Long id){
     accountsService.deleteAccount(id);
     return ResponseEntity.noContent().build();
 }
 @PreAuthorize("hasAuthority('admin')")
-@PutMapping("/update/{logId}")
+@PutMapping("/admin/update/{logId}")
     public ResponseEntity<AccountsResponseDTO>updateAccount(
             @PathVariable Long id,
             @RequestBody @Valid AccountRequestUpdateDTO request){

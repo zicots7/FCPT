@@ -23,10 +23,10 @@ public class MilestoneService {
     private  final ProjectsRepository projectsRepository;
     private final MilestoneMapper milestoneMapper;
     
-    public MilestoneResponseDTO getMilestone(Long id) {
-        Milestone milestone = milestoneRepository.findById(id)
-                .orElseThrow(()->new ResourceNotFoundException("Milestone does not exist"));
-        return milestoneMapper.toResponse(milestone);
+    public List<MilestoneResponseDTO> getMilestone(Long pid) {
+
+        return milestoneRepository.findAllByProjectPid(pid).stream()
+                .map(milestoneMapper::toResponse).toList();
     }
 
     public List<MilestoneResponseDTO> getMilestones() {

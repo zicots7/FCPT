@@ -19,19 +19,19 @@ public class MilestoneController {
     private final MilestoneService milestoneService;
 
     @PreAuthorize("hasAuthority('admin') or hasAuthority('client')")
-    @GetMapping("/id/{logId}")
-    public ResponseEntity<MilestoneResponseDTO> getPayment(@PathVariable Long id){
-        return ResponseEntity.ok(milestoneService.getMilestone(id));
+    @GetMapping("/id/{pid}")
+    public ResponseEntity<List<MilestoneResponseDTO>> getMilestones(@PathVariable Long pid){
+        return ResponseEntity.ok(milestoneService.getMilestone(pid));
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping("/all")
+    @GetMapping("/admin/all")
     public ResponseEntity<List<MilestoneResponseDTO>>getMilestones(){
         return ResponseEntity.ok(milestoneService.getMilestones());
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping("/create")
+    @PostMapping("/admin/create")
     public ResponseEntity<MilestoneResponseDTO>createMilestone(
             @RequestBody
             @Valid MilestoneRequestDTO request
@@ -40,7 +40,7 @@ public class MilestoneController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/update/{logId}")
+    @PutMapping("/admin/update/{pid}")
     public ResponseEntity<MilestoneResponseDTO>createMilestone(
             @PathVariable Long id,
             @RequestBody
@@ -50,7 +50,7 @@ public class MilestoneController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("/delete/{logId}")
+    @DeleteMapping("/admin/delete/{Id}")
     public ResponseEntity<MilestoneResponseDTO>deleteMilestone(
             @PathVariable Long id
     ){

@@ -56,10 +56,11 @@ public class ProjectsService {
             projectsRepository.deleteByPid(id);
         }
     }
-    public ProjectsResponseDTO getProject(Long id){
-        Projects projects =projectsRepository.findByPid(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Project not found"));
-        return projectMapper.toResponse(projects);
+    public List<ProjectsResponseDTO> getProject(Long id){
+        return projectsRepository.findByClientId(id).stream()
+                .map(projectMapper::toResponse)
+                .toList();
+
     }
 
     public List<ProjectsResponseDTO> getProjects(){
