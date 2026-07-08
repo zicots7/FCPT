@@ -1,4 +1,4 @@
-package FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.Login;
+package FreelanceClientsAndPayementsTracker.FCPT.DTO.Login;
 
 import jakarta.validation.constraints.Size;
 

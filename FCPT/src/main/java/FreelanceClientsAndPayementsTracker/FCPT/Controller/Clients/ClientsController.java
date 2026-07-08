@@ -33,25 +33,25 @@ public class ClientsController {
         return ResponseEntity.ok(clientsService.getClients());
     }
     @PreAuthorize("hasAuthority('admin')")
-    @GetMapping("/admin/{logId}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ClientResponseDTO>getClient(@PathVariable Long id){
         return ResponseEntity.ok(clientsService.getClient(id));
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("/admin/delete/{logId}")
-    public ResponseEntity<ClientResponseDTO>deleteClient(@PathVariable Long logId){
-        clientsService.deleteClient(logId);
+    @DeleteMapping("/admin/delete/{id}")
+    public ResponseEntity<ClientResponseDTO>deleteClient(@PathVariable Long id){
+        clientsService.deleteClient(id);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/admin/update/{logId}")
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<ClientResponseDTO> updateClient(
-            @PathVariable Long logId,
+            @PathVariable Long id,
             @RequestBody @Valid ClientsRequestDTO request){
 
-        return ResponseEntity.ok(clientsService.updateClient(logId,request));
+        return ResponseEntity.ok(clientsService.updateClient(id,request));
     }
 
 }

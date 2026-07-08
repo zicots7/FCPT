@@ -1,9 +1,11 @@
 package FreelanceClientsAndPayementsTracker.FCPT.DTO.Clients;
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts.Roles;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients.Platform;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import javax.management.relation.Role;
 import java.time.LocalDateTime;
 
 public record ClientsRequestDTO(
@@ -18,9 +20,7 @@ public record ClientsRequestDTO(
         @NotBlank(message = "Email is required")
         @Email(message = "Invalid email format")
         String email,
-        @NotBlank(message = "Platform is required")
         Platform platform,
-        @NotBlank(message = "Date and Time required")
         LocalDateTime addedDate,
         @NotBlank(message = "Company is required")
         String company

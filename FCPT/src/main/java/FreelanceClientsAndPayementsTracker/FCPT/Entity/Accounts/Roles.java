@@ -7,7 +7,7 @@ public enum Roles {
     Roles(String displayRole){
         this.displayRole=displayRole;
     }
-    private String DisplayRole(){
+    public String getDisplayRole(){
         return displayRole;
     }
 }

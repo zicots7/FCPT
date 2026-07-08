@@ -1,10 +1,11 @@
-package FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.Login;
+package FreelanceClientsAndPayementsTracker.FCPT.DTO.Login;
 
 import java.util.List;
 
 public record JWTLoginResponse(
         String token,
         String username,
-        List<String> roles
+        String role,
+        Long id
 ) {
 }

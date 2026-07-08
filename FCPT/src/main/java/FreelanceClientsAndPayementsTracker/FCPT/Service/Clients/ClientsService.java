@@ -1,6 +1,8 @@
 package FreelanceClientsAndPayementsTracker.FCPT.Service.Clients;
 import FreelanceClientsAndPayementsTracker.FCPT.DAO.Accounts.AccountsRepository;
 import FreelanceClientsAndPayementsTracker.FCPT.DAO.Clients.ClientsRepository;
+import FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.AccountsRequestDTO;
+import FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.AccountsResponseDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Clients.ClientResponseDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Clients.ClientsRequestDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts.Accounts;
@@ -24,6 +26,7 @@ public class ClientsService {
     private final PasswordEncoder passwordEncoder;
     private final ClientsRepository clientsRepository;
     private final ClientMapper clientMapper;
+
 
     @Transactional
     public ClientResponseDTO createClient(ClientsRequestDTO request) {

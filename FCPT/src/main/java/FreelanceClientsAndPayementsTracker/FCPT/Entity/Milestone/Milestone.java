@@ -37,7 +37,7 @@ import java.util.List;
         @Column(nullable = false, length = 50,name = "is_paid")
         private PaidStatus isPaid;
 
-        @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL)
+        @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL,orphanRemoval = true)
         private List<Payment> payments;
     }
 

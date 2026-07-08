@@ -1,14 +1,18 @@
 package FreelanceClientsAndPayementsTracker.FCPT.Service.Accounts;
 
 import FreelanceClientsAndPayementsTracker.FCPT.DAO.Accounts.AccountsRepository;
+import FreelanceClientsAndPayementsTracker.FCPT.DAO.Clients.ClientsRepository;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.AccountRequestUpdateDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.AccountsRequestDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.DTO.Accounts.AccountsResponseDTO;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts.Accounts;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts.mapper.AccountMapper;
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients.Clients;
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients.mapper.ClientMapper;
 import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.ResourceNotFoundException;
 import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.UserAlreadyExistsException;
-import lombok.RequiredArgsConstructor;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -16,12 +20,13 @@ import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AccountsService {
 private final AccountsRepository accountsRepository;
 private final PasswordEncoder passwordEncoder;
 private final AccountMapper accountMapper;
 
+@Transactional
 public AccountsResponseDTO createAccount(AccountsRequestDTO request){
     if(accountsRepository.existsByUsername(request.username())){
         throw new UserAlreadyExistsException("username - '" +request.username()+"' is taken ");
@@ -42,12 +47,14 @@ public AccountsResponseDTO createAccount(AccountsRequestDTO request){
             .build();
     return accountMapper.toResponse(accountsRepository.save(accounts));
 }
+@Transactional
 public void deleteAccount(Long id){
     if(accountsRepository.existsById(id)){
     accountsRepository.deleteById(id);
 }
 else{throw new ResourceNotFoundException("account does not exist!");}
 }
+@Transactional
 public AccountsResponseDTO updateAccount(Long id, AccountRequestUpdateDTO request) {
     Accounts accounts = accountsRepository.findById(id)
             .orElseThrow(()->new ResourceNotFoundException("Account does not exist!"));

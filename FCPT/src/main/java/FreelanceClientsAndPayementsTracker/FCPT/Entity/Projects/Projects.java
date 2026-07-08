@@ -1,5 +1,6 @@
 package FreelanceClientsAndPayementsTracker.FCPT.Entity.Projects;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients.Clients;
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Logs.Logs;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Milestone.Milestone;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,7 +44,8 @@ public class Projects {
     @Column(nullable = false,name = "total_value")
     private Long totalValue;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Milestone> milestones;
+
 
 }

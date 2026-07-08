@@ -19,13 +19,13 @@ public class AccountsController {
 
 private final AccountsService accountsService;
 @PreAuthorize("hasAuthority('admin')")
-@PostMapping("/register")
+@PostMapping("/admin/register")
 public ResponseEntity<AccountsResponseDTO>register(@RequestBody @Valid AccountsRequestDTO request){
     return ResponseEntity.status(HttpStatus.CREATED)
             .body(accountsService.createAccount(request));
 }
 @PreAuthorize("hasAuthority('admin') or hasAuthority('client')")
-@GetMapping("/{logId}")
+@GetMapping("/id/{id}")
 public ResponseEntity<AccountsResponseDTO>getAccount(@PathVariable Long id){
     return ResponseEntity.ok(accountsService.getAccount(id));
 
@@ -37,13 +37,13 @@ public ResponseEntity<List<AccountsResponseDTO>>getAccounts(){
 
 }
 @PreAuthorize("hasAuthority('admin')")
-@DeleteMapping("/admin/delete/{logId}")
+@DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<AccountsResponseDTO>deleteAccount(@PathVariable Long id){
     accountsService.deleteAccount(id);
     return ResponseEntity.noContent().build();
 }
 @PreAuthorize("hasAuthority('admin')")
-@PutMapping("/admin/update/{logId}")
+@PutMapping("/admin/update/{id}")
     public ResponseEntity<AccountsResponseDTO>updateAccount(
             @PathVariable Long id,
             @RequestBody @Valid AccountRequestUpdateDTO request){

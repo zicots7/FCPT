@@ -1,5 +1,6 @@
 package FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts.Accounts;
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Projects.Projects;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -16,7 +18,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Clients {
+public class Clients{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +51,13 @@ public class Clients {
     @CreationTimestamp
     @Column(updatable = false,name = "added_date")
     private LocalDateTime addedDate;
+
+    @OneToMany(
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Projects> projects;
 
 }
 

@@ -4,7 +4,6 @@ package FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients.Clients;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.groups.Default;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,7 +35,7 @@ public class Accounts implements UserDetails{
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user" ,cascade = CascadeType.ALL,orphanRemoval = true)
     private Clients client;
 
     @Column(nullable = false,unique = true)
@@ -72,7 +71,7 @@ public class Accounts implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
-        return List.of(new SimpleGrantedAuthority("ROLE_"+this.role.name()));
+        return List.of(new SimpleGrantedAuthority(this.role.getDisplayRole()));
     }
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
