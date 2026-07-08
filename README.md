@@ -94,7 +94,7 @@ Follow these steps to get the project running locally on your machine.
 - Make a .env file and store all the required Parameters and Variables in side that file (Important).
 - Using Docker Compose inside the FCPT where docker-compose.yml file is present [ docker-compose build FCPT:V1 ].
 
-### Installation using Maven for Java Spring Boot and  Node.js NPM for React with JavaScript 
+### Installation using Maven for Java Spring Boot and  Node.js NPM for React with TypeScript 
 
 ```bash
 - Ensure both JDK 17+ and Node.js LTS are installed, along with an IDE like IntelliJ IDEA or VS Code.
