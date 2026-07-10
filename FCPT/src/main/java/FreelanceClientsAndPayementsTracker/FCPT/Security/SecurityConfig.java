@@ -38,7 +38,7 @@ public class SecurityConfig  {
  }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http    .cors(Customizer.withDefaults())
                 .csrf(csrfConfig->csrfConfig.disable())
                 .sessionManagement(sessionConfig->
                                 sessionConfig
@@ -52,12 +52,33 @@ public class SecurityConfig  {
                         .requestMatchers("/FCPT/*/admin/**").hasAuthority("admin")
 
                         // 2. Client/User paths require 'client' or 'admin'
-                        .requestMatchers("/FCPT/*/id/*", "/FCPT/download-invoice/*").hasAnyAuthority("admin", "client")
+                        .requestMatchers("/FCPT/*/id/*", "/FCPT/download-invoice/*").hasAnyAuthority("client","admin")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOrigins(List.of("*"));
+        config.setAllowedMethods(
+                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        );
+        config.setAllowedHeaders(
+                List.of("Authorization", "Content-Type")
+        );
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", config);
+
+        return source;
     }
 }
 

@@ -1,6 +1,5 @@
 package FreelanceClientsAndPayementsTracker.FCPT.DAO.Clients;
 
-import FreelanceClientsAndPayementsTracker.FCPT.Entity.Accounts.Accounts;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Clients.Clients;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
