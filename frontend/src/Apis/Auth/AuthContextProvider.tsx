@@ -44,12 +44,6 @@ export const AuthProvider = ({
         const savedUser =
             localStorage.getItem("user");
 
-
-        console.log("TOKEN:", token);
-        console.log("USER:", savedUser);
-
-
-
         if(token && savedUser){
 
             setUser(

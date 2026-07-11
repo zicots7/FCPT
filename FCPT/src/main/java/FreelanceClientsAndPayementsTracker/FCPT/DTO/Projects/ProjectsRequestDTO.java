@@ -1,8 +1,6 @@
 package FreelanceClientsAndPayementsTracker.FCPT.DTO.Projects;
-
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Projects.Status;
 import jakarta.validation.constraints.NotBlank;
-
 import java.time.LocalDateTime;
 
 public record ProjectsRequestDTO(

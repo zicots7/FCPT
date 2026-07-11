@@ -58,22 +58,16 @@ export default function AddClient({className,onSuccess}:Props) {
     <>
 
         <button
-
             className={className}
-
             onClick={()=>setOpen(true)}
-
         >
-
             + Add Client
-
         </button>
 
 
 
-
         {open && (
-
+            
             <div
                 className="modal d-block"
                 style={{
@@ -219,37 +213,28 @@ export default function AddClient({className,onSuccess}:Props) {
                             </select>
 
 
-
+                                
                         <div className="modal-footer">
-
-
                             <button
-
-                                className="btn btn-secondary"
-
-                                onClick={()=>setOpen(false)}
-
+                                className="btn btn-primary"
+                                onClick={()=>handleSubmit()}
                             >
-                                Cancel
+                             Add
                             </button>
 
+                            <button
+                                className="btn btn-secondary"
+                                onClick={()=>setOpen(false)}
+                            >
+                             Cancel
+                            </button>
+                                
 
                         </div>
-
                         </div>
-
-
-
-
-
                     </div>
-
-
                 </div>
-
-
             </div>
-
         )}
 
         </>

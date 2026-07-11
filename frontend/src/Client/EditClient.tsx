@@ -20,7 +20,7 @@ export default function EditClient({
 
   const [open,setOpen] =useState(false);
 
-
+ 
     const [form,setForm] =
         useState<UpdateClientRequest>(
             {username: client.username,
@@ -44,18 +44,16 @@ export default function EditClient({
         });
     };
   const handleSubmit = async()=>{
-console.log(" clicked");
         try{
 
 
             await PutClient(
                 id,
                 form
-            );
-
+             );
 
             setOpen(false);
-
+             
             onSuccess();
 
 
@@ -71,14 +69,13 @@ console.log(" clicked");
 
       return(
             <>
-
+      
         <button
             className={className}
             onClick={()=>setOpen(true)}
         >
             Edit
         </button>
-
 
 
         {open && (
@@ -229,13 +226,17 @@ console.log(" clicked");
 
                         <div className="modal-footer">
 
-                            <button
-                                className="btn btn-secondary"
-
-                                onClick={()=>setOpen(false)}
-                            >
-                                Cancel
-                            </button>
+                        <button
+                        className="btn btn-secondary"
+                        onClick={() => {
+                            setOpen(false);
+                            setTimeout(() => {
+                            window.location.reload();
+                            }, 150);
+                        }}
+                        >
+                        Cancel
+                        </button>
                              <button
                             className="btn btn-primary"
                             onClick={handleSubmit}

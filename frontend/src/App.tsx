@@ -6,16 +6,20 @@ import LoginPage from "./Login/Login";
 import MainLayout from "./Layout/MainLayout";
 import Dashboard from "./Dashboard/Dashboard";
 import Projects from "./Project/Projects";
-import AddClient from "./Client/AddClient";
-import EditClient from "./Client/EditClient";
+import { Toaster } from "react-hot-toast";
+
 
 
 function App() {
 
   return (
-
+    <>
         <Routes>
              
+             <Route
+                path="/"
+                element={<LoginPage />}
+            />
             <Route
                 path="/login"
                 element={<LoginPage />}
@@ -42,12 +46,22 @@ function App() {
                 path="/projects"
                 element={<Projects/>}
                 />
-
-                
-
+       
             </Route>
-  
         </Routes>
+        
+           <Toaster
+          position="top-right" 
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          }} 
+        />
+        </>
+
     );
 
   }

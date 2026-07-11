@@ -12,14 +12,27 @@ export interface User{
     isDemo:boolean;
     isActive:boolean;
 };
-export interface Projects{
-     pid:number,
+type Status= "Complete"|"Pending"|"Delivered";
+export interface CreateProjects{
     title:string,
     description:string,
     startDate:string,
     deadline:string,
-    Status:string,
+    status:Status,
     totalValue:number,
+    client:string,
+    clientId:number
+
+};
+export interface Projects{
+    pid:number,
+    title:string,
+    description:string,
+    startDate:string,
+    deadline:string,
+    status:Status,
+    totalValue:number,
+    client:string,
     clientId:number
 
 };
@@ -74,4 +87,5 @@ export interface CreateClientRequest {
 
     platform:Platform;
 
-}
+};
+

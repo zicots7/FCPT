@@ -73,7 +73,6 @@ public class ClientsService {
         if (request.password() != null && !request.password().isEmpty()) {
             account.setPassword(passwordEncoder.encode(request.password()));
         }
-
         account.setUsername(request.username());
         account.setEmail(request.email());
         clients.setFirstName(request.firstName());

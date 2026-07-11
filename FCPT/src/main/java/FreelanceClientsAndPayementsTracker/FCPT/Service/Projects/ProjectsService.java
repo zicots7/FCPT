@@ -64,6 +64,7 @@ public class ProjectsService {
     }
 
     public List<ProjectsResponseDTO> getProjects(){
+
         return projectsRepository.findAll().stream()
                 .map(projectMapper::toResponse)
                 .toList();

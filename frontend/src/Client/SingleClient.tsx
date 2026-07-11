@@ -24,11 +24,23 @@ const tryFetchClient=async()=>{
 useEffect(()=>{
 tryFetchClient();
 },[reload]);
-if (loading) return <div className="card loading">Loading client... Please Wait</div>;
+if (loading) {
   return (
-   <tbody>
+    <tbody>
+      <tr>
+        <td colSpan={8} className="text-center">
+          Loading client... Please Wait
+        </td>
+      </tr>
+    </tbody>
+  );
+}
+  return (
+
+    <>
+      <tbody>
       {clients.length === 0 ? (
-        <tr>
+        <tr >
           <td colSpan={8} className="text-center text-muted py-5">
             <p className="mb-1 fs-5">No clients found</p>
             <small>Add your first client to get started</small>
@@ -54,17 +66,25 @@ if (loading) return <div className="card loading">Loading client... Please Wait<
             <td className="text-muted">{client.company}</td>
             <td className="text-muted">••••••••</td>
             <td className="text-muted small">{client.addedDate}</td>
-          
-            <EditClient className="btn btn-sm btn-outline-primary me-1"
-             id={client.userId}client={client} onSuccess={tryFetchClient}/>
-         
-            <DeleteClient className="btn btn-sm btn-outline-danger me-1"
-             id={client.userId} onSuccess={tryFetchClient} username={client.username}/>
-          
-        
+            <td>
+              <EditClient
+                className="btn btn-sm btn-outline-primary me-1"
+                id={client.userId}
+                client={client}
+                onSuccess={tryFetchClient}
+              />
+              <DeleteClient
+                className="btn btn-sm btn-outline-danger me-1"
+                id={client.userId}
+                onSuccess={tryFetchClient}
+                username={client.username}
+              />
+           </td>
           </tr>
         ))
       )}
     </tbody>
+    </>
+ 
   )
 }

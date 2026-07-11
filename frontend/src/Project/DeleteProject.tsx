@@ -1,53 +1,36 @@
-
-import { deleteClient } from '../Apis/Client/deleteClient';
-
+import React from 'react'
+import { deleteProject } from '../Apis/Project/deleteProject';
 interface Props {
     id:number;
+    title:string
     className?:string;
-    username:string;
     onSuccess:()=>void;
 }
-
-export default function DeleteClient({id,className,username,onSuccess}:Props) {
-
-  const handleDelete = async()=>{
-
-
+export default function DeleteProject({id,onSuccess,className,title}:Props) {
+const handleDelete = async()=>{
         const confirmDelete =
             window.confirm(
-                `Delete ${username}?`
+                `Delete ${title}?`
             );
-
-
         if(!confirmDelete){
             return;
         }
 
-
         try{
-
-            await deleteClient(id);
-
+            await deleteProject(id);
 
             onSuccess();
-            setTimeout(() => {
-    window.location.reload();
-}, 200);
 
         }catch(error){
-
             console.log(error);
-
             alert("Delete failed");
 
         }
-
     };
    return(
     <button className={className}
     onClick={handleDelete}>
             Delete
         </button>
-  
-  )
+   )
 }
