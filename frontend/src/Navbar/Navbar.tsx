@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import  Logout  from '../Apis/logout/Logout';
 import type { User } from '../Types/Types';
 
@@ -16,9 +16,9 @@ console.log("Navbar user:", user);
          try {
             await Logout();
         } finally {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user"); // if you're storing JWT here
+            localStorage.clear()
             navigate("/login");
+            window.location.reload(); 
         }
     };
 
@@ -49,38 +49,39 @@ console.log("Navbar user:", user);
                 )}
 
 
-                <button
+                <Link
                     className="nav-link text-light text-center bg-transparent border-0"
-                    onClick={() => navigate("/dashboard")}
+                    to="/dashboard"
                 >
                     <div className="d-block mb-1"></div>
                     <span>Home</span>
-                </button>
+                </Link>
 
                 {user?.role=="admin"&&(
-                <button
+                <Link
                     className="nav-link text-light text-center bg-transparent border-0"
-                    onClick={() => navigate("/clients")}
+                    to="/clients"
                 >
                     <div className="d-block mb-1"></div>
                     <span>Clients</span>
-                </button>
+                </Link>
                 )}
                 
 
 
-                <button
+                <Link
                     className="nav-link text-light text-center bg-transparent border-0"
-                    onClick={() => navigate("/projects")}
+                   to="/projects"
                 >
                     <div className="d-block mb-1"></div>
                     <span>Projects</span>
-                </button>
+                </Link>
 
                 {user&&(
-                 <button
+                                <button
                     className="nav-link text-light text-center bg-transparent border-0"
                     onClick={handleLogout}
+                    type="button"
                 >
                     <div className="d-block mb-1"></div>
                     <span>Logout</span>

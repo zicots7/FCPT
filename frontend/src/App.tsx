@@ -7,6 +7,8 @@ import MainLayout from "./Layout/MainLayout";
 import Dashboard from "./Dashboard/Dashboard";
 import Projects from "./Project/Projects";
 import { Toaster } from "react-hot-toast";
+import PublicRoute from "./Apis/Auth/PublicRoute";
+import AdminRoute from "./Apis/Auth/AdminRoutes";
 
 
 
@@ -18,11 +20,17 @@ function App() {
              
              <Route
                 path="/"
-                element={<LoginPage />}
+                
+                element={<PublicRoute>
+                {<LoginPage />}
+                 </PublicRoute>}
             />
             <Route
                 path="/login"
-                element={<LoginPage />}
+                element={
+                    <PublicRoute>
+                    <LoginPage />
+                    </PublicRoute>}
             />
        {/* Protected */}
             <Route
@@ -38,7 +46,10 @@ function App() {
                 />
                 <Route
                     path="/clients"
-                    element={<ClientMain />}
+                    element={
+                    <AdminRoute>
+                        <ClientMain />
+                    </AdminRoute>}
                 
                 />
          

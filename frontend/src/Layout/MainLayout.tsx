@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useAuth } from "../Apis/Auth/AuthContextProvider";
 import  Navbar  from "../Navbar/Navbar";
 import { Outlet } from "react-router-dom";
@@ -18,7 +18,7 @@ export default function MainLayout(){
 
     return (
         <>
-   <div className="d-flex flex-column min-vh-100 mt-4 py-3">
+   <div className="d-flex flex-column min-vh-100 mt-4 py-0">
   <Navbar user={user ?? undefined} />
 
   <main className="flex-grow-1">

@@ -1,5 +1,5 @@
 import type { LoginRequest, LoginResponse } from "../../Types/Types";
-import api from "../Axios";
+import api from "../Interceptor/Axios";
 
 
 

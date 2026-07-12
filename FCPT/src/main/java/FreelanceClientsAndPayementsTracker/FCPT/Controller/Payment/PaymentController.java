@@ -42,7 +42,7 @@ public class PaymentController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/admin/update/{Id}")
-    public ResponseEntity<PaymentResponseDTO>createPayment(
+    public ResponseEntity<PaymentResponseDTO>updatePayment(
             @PathVariable Long id,
             @RequestBody
             @Valid PaymentRequestDTO request

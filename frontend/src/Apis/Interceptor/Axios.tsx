@@ -51,12 +51,13 @@ api.interceptors.response.use(
         localStorage.removeItem("token");
         toast.error("Session expired. Please log in again.");
         // Redirect to login
-        window.location.href = "/login";}
+        window.location.href = "/login";
+         return Promise.reject(error);
+      }
       // Scenario A: Server alive but returned an error status code (4xx, 5xx)
       const message = STATUS_MESSAGES[error.response.status] || "An unexpected error occurred.";
       toast.error(message);
        setTimeout(() => {
-    window.location.reload();
   }, 150);
     } else if (error.request) {
       toast.error("Network error. Cannot reach the server.");

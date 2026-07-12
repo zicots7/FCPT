@@ -1,5 +1,5 @@
 
-import api from '../Axios';
+import api from '../Interceptor/Axios';
 
 export const deleteClient=async (id:number)=> {
   return (

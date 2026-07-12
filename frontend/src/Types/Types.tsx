@@ -72,20 +72,38 @@ export interface UpdateClientRequest {
 
 };
 export interface CreateClientRequest {
-
     username:string;
-
     firstName:string;
-
     lastName:string;
-
     password:string;
-
     email:string;
-
     company:string;
-
     platform:Platform;
-
+};
+type PaymentMethod= "UPI"|"CARD"|"CASH"|"NET_BANKING"| "CRYPTO";
+export interface Payment{
+    amountPaid:number;
+    datePaid:string;
+    paymentMethod:PaymentMethod;
+    milestoneId:number;
 };
 
+type PaidStatus="Yes"|"No";
+export interface Milestone{
+    id:number;
+    description:string;
+    amount:number;
+    dueDate:string;
+    isPaid:PaidStatus,
+    projectNameId:number
+};
+
+export interface Log{
+    logId:string;
+    pid:number;
+    message:string;
+    timestamp:string;
+    tags:string;
+    interactionType:string;
+    details:Map<String, Object>;
+};

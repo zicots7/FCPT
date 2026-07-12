@@ -1,5 +1,5 @@
 
-import api from '../Axios';
+import api from '../Interceptor/Axios';
 import type { CreateClientRequest } from '../../Types/Types';
 
 export async function postClient(client:CreateClientRequest) {
