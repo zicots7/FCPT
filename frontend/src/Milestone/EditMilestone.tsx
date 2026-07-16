@@ -9,6 +9,8 @@ type props={
 
 export default function EditMilestone({className,milestones,onSuccess}:props) {
   return (
-    <div>EditMilestone</div>
+    <button
+    className={className}
+    >Edit Milestone</button>
   )
 }

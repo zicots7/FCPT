@@ -12,8 +12,8 @@ export default function ProjectList() {
   <>
   <div className="container py-4">
 
-  <div className="d-flex justify-content-between align-items-center mb-4">
-    <h2 className="fw-bold mb-0">Projects</h2>
+  <div className="d-flex justify-content-between align-items-center mb-4 mt-4">
+    <h2 className="fw-bold mb-0 mt-2">Projects</h2>
     {user?.role==="admin"&&(
         <AddProject 
             className="btn btn-primary"

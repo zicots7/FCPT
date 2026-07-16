@@ -41,7 +41,7 @@ public class MilestoneController {
 
     @PreAuthorize("hasAuthority('admin')")
     @PutMapping("/admin/update/{id}")
-    public ResponseEntity<MilestoneResponseDTO>createMilestone(
+    public ResponseEntity<MilestoneResponseDTO>updateMilestone(
             @PathVariable Long id,
             @RequestBody
             @Valid MilestoneRequestDTO request
@@ -50,7 +50,7 @@ public class MilestoneController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("/admin/delete/{Id}")
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<MilestoneResponseDTO>deleteMilestone(
             @PathVariable Long id
     ){

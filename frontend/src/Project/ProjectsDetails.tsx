@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import type { Log, LogsResponseDTO, Milestone, Payment, Projects } from '../Types/Types';
+import { useEffect, useState } from 'react'
+import type {  LogsResponseDTO, Milestone, Payment, Projects } from '../Types/Types';
 import { useAuth } from '../Apis/Auth/AuthContextProvider';
 import { getMilestones } from '../Apis/Milestone/getMilestone';
 import getPayment from '../Apis/Payments/getPayment';
@@ -11,9 +11,9 @@ import SinglePayment from '../Payment/SinglePayment';
 import SingleLog from '../Log/SingleLog';
 import AddMilestone from '../Milestone/AddMilestone';
 import AddPayment from '../Payment/AddPayment';
-import { Link } from 'react-router-dom';
-import DeleteMilestone from '../Milestone/DeleteMilestone';
-import DeletePayment from '../Payment/DeletePayment';
+import Invoice from '../Invoice/Invoice';
+
+
 
 interface Props {
     projects:Projects
@@ -22,17 +22,15 @@ interface Props {
 }
 
 export default function ProjectsDetails({onSuccess,className,projects}:Props) {
+
   const [open,setOpen] =useState(false);
   const [loading,setLoading]=useState<boolean>(false);
   const [payments, setPayments] = useState<Payment[]>([]);
   const [milestones, setMilestones] = useState<Milestone[]>([]);
   const [logs, setLogs] = useState<LogsResponseDTO[]>([]);
-  const [reload,setReload] = useState(false);
+  const [totalPaid,setTotalPaid]=useState(0);
+  const [totalPending,setTotalPending]=useState(0);
   const {user}=useAuth();
-
-      const refreshProject = ()=>{
-          setReload(!reload);
-      };
       const fetchDetails= async()=>{
         try{
         setLoading(true);
@@ -40,12 +38,20 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         let paymentdata:Payment[]=[];
         let logs:LogsResponseDTO[]=[];
         if(user){
+            if(!user) return;
           milestone= await getMilestones(projects.pid);
          paymentdata = await getPayment(projects.pid);
           
           logs= await getLogs(projects.pid);
 
         }
+        const totalPaid = paymentdata.reduce(
+            (sum, payment) => sum + payment.amountPaid,
+            0
+            );
+        const amountPending= (projects.totalValue-totalPaid);
+        setTotalPaid(totalPaid);
+        setTotalPending(amountPending);
         setPayments(paymentdata);
         setMilestones(milestone);
         setLogs(logs);
@@ -59,7 +65,10 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         if(user){
           fetchDetails();
         }
-      },[open]);
+      },[user, projects.pid]);
+      const refreshProject = async ()=>{
+    await fetchDetails();
+};
   return (
     <>
      <button 
@@ -104,9 +113,9 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
                         <span className="fw-semibold text-dark p-2">
                         { projects.client }
                         </span>
-                      {projects.Status === "Pending" ? (
+                      {projects.status === "Pending" ? (
                         <span className="badge bg-warning text-dark fs-8">Pending</span>
-                    ) : projects.Status === "Complete" ? (
+                    ) : projects.status === "Complete" ? (
                         <span className="badge bg-success fs-8">Completed</span>
                     ) : (
                         <span className="badge bg-primary fs-8">Delivered</span>
@@ -143,7 +152,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
             <div className="card text-white bg-success shadow-sm">
                 <div className="card-body">
                     <h6 className="card-title">Total Paid</h6>
-                    <h4 className="mb-0">₹</h4>
+                    <h4 className="mb-0">₹{totalPaid}</h4>
                 </div>
             </div>
         </div>
@@ -152,7 +161,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
             <div className="card text-white bg-danger shadow-sm">
                 <div className="card-body">
                     <h6 className="card-title">Pending</h6>
-                    <h4 className="mb-0">₹</h4>
+                    <h4 className="mb-0">₹{totalPending}</h4>
                 </div>
             </div>
         </div>
@@ -230,9 +239,9 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
                       )}
           
                     
-                      {projects.Status === "Pending" ? (
+                      {projects.status === "Pending" ? (
                         <span className="badge bg-warning text-dark ms-2">Pending</span>
-                    ) : projects.Status === "Complete" ? (
+                    ) : projects.status === "Complete" ? (
                         <span className="badge bg-success ms-2">Completed</span>
                     ) : (
                         <span className="badge bg-primary ms-2">Delivered</span>
@@ -241,44 +250,50 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
                     </p>
                 </div>
             </div>
-                {user?.role=="admin"&&(
- <div className="card shadow-sm mb-4">
+             <div className="card shadow-sm mb-4">
                 <div className="card-header fw-semibold">
                     Actions
                 </div>
                 <div className="card-body d-grid gap-2">
-                    <EditProject
-                      className="btn btn-sm btn-outline-primary me-1"
-                      id={projects.pid}
-                      project={projects}
-                      onSuccess={refreshProject}
-                    />
-                    <DeleteProject
-                      className="btn btn-sm btn-outline-danger me-1"
-                      id={projects.pid}
-                      onSuccess={refreshProject}
-                      title={projects.title}
-                    />
-                    <a href="{% url 'invoice-download' projects.Pid %}"
-                       className="btn btn-outline-primary">
-                         Download Invoice
-                    </a>
-                    <AddMilestone
-                       className="btn btn-outline-success"
-                       pid={projects.pid}
-                       onSuccess={refreshProject}
-                       />
-                   
-                       <AddPayment 
-                       milestones={milestones}
-                       className="btn btn-outline-success"
-                       onSuccess={refreshProject}
-                       />
-                    
+                 {(user?.role === "admin" || user?.role === "client") && (
+                <Invoice
+                    className="btn btn-sm btn-outline-info me-1"
+                    pid={projects.pid}
+                />
+                )}
 
+                {user?.role === "admin" && (
+                <>
+                    <EditProject
+                    className="btn btn-sm btn-outline-primary me-1"
+                    id={projects.pid}
+                    project={projects}
+                    onSuccess={refreshProject}
+                    />
+
+                    <DeleteProject
+                    className="btn btn-sm btn-outline-danger me-1"
+                    id={projects.pid}
+                    onSuccess={refreshProject}
+                    title={projects.title}
+                    />
+
+                    <AddMilestone
+                    className="btn btn-outline-success"
+                    pid={projects.pid}
+                    onSuccess={refreshProject}
+                    />
+
+                    <AddPayment
+                    milestones={milestones}
+                    className="btn btn-outline-success"
+                    onSuccess={refreshProject}
+                    />
+                </>
+                )}
                 </div>
             </div>
-                )}
+               
            
 
             <div className="card shadow-sm">

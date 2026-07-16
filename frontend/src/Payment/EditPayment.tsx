@@ -1,7 +1,16 @@
 import React from 'react'
+import type { Payment } from '../Types/Types'
 
-export default function EditPayment() {
+type props={
+  className?:string,
+  payment:Payment
+  onSuccess:()=>void;
+}
+
+export default function EditPayment({onSuccess,className,payment}) {
   return (
-    <div>EditPayment</div>
+    <button
+    className={className}
+    >Edit Payment</button>
   )
 }

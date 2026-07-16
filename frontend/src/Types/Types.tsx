@@ -13,14 +13,14 @@ export interface User{
     isActive:boolean;
 };
 type Status= "Complete"|"Pending"|"Delivered";
-export type CreateProjects = Omit<Projects, "pid">;
+export type CreateProjects = Omit<Projects, "pid"|"client"|"platform">;
 export interface Projects{
     pid:number,
     title:string,
     description:string,
     startDate:string,
     deadline:string,
-    Status:Status,
+    status:Status,
     totalValue:number,
     platform:Platform,
     client:string,
@@ -58,13 +58,14 @@ export type CreateClientRequest=Omit<Clients,"userId">;
 
 type PaymentMethod= "UPI"|"CARD"|"CASH"|"NET_BANKING"| "CRYPTO";
 export interface Payment{
+    id:number;
     amountPaid:number;
     datePaid:string;
     paymentMethod:PaymentMethod;
     milestoneId:number;
-    milestone:string;
+    milestone?:string;
 };
-
+export type CreatePayment=Omit<Payment,"id">;
 
 type PaidStatus="Yes"|"No";
 export interface Milestone{
@@ -75,6 +76,7 @@ export interface Milestone{
     isPaid:PaidStatus,
     projectNameId:number
 };
+export type CreateMilestone= Omit<Milestone,"id">;
 export enum InteractionType {
     revision_request = "revision_request",
     contract = "contract",

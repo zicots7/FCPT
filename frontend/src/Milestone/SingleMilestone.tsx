@@ -15,11 +15,8 @@ interface Props {
 
 export default function SingleMilestone({onSuccess,className,projects,milestones}:Props) {
   const [loading,setLoading]=useState<boolean>(false);
-  const [reload,setReload] = useState(false);
   
-      const refreshClients = ()=>{
-        setReload(!reload);
-    };
+
   const {user}=useAuth();
 
       if(loading){
@@ -42,8 +39,8 @@ export default function SingleMilestone({onSuccess,className,projects,milestones
                             <AddMilestone
                                 className="btn btn-sm btn-outline-primary"
                                 
-                                id={projects.pid}
-                                onSuccess={refreshClients}
+                                pid={projects.pid}
+                                onSuccess={onSuccess}
                              />
                         )}
                 </div>
@@ -94,14 +91,15 @@ export default function SingleMilestone({onSuccess,className,projects,milestones
                                     <td>
                                   <EditMilestone
                                   className="btn btn-sm btn-outline-primary me-1"
-                                   milestone={milestone}
-                                   onSuccess={refreshClients}
+                                   milestones={milestone}
+                                   onSuccess={onSuccess}
 
                                   />
                                   <DeleteMilestone
                                    className="btn btn-sm btn-outline-danger"
+                                   details={milestone.description}
                                    id={milestone.id}
-                                   onSuccess={refreshClients}
+                                   onSuccess={onSuccess}
                                    />
                             </td>
                             )}       

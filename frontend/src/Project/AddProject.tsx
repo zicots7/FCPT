@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import type { Clients, CreateProjects } from '../Types/Types';
 import { postProject } from '../Apis/Project/postProject';
-import { ClientList } from '../Client/ClientList';
 import { getClients } from '../Apis/Client/getClients';
 interface Props {
     className?:string;
@@ -20,7 +19,7 @@ export default function AddProject({className,onSuccess}:Props) {
               description:"",
               startDate:"",
               deadline:"",
-              Status:"Pending",
+              status:"Pending",
               totalValue:0,
               
           });
@@ -52,9 +51,9 @@ export default function AddProject({className,onSuccess}:Props) {
               description:"",
               startDate:"",
               deadline:"",
-              Status:"Pending",
-              totalValue:Number(""),
-              client:"",
+              status:"Pending",
+              totalValue:Number("")
+           
               });
               onSuccess();
           }catch(error){
@@ -213,11 +212,11 @@ export default function AddProject({className,onSuccess}:Props) {
                                 <select
                                 className="form-select"
 
-                                value={form.Status}
+                                value={form.status}
 
                                 onChange={
                                     e=>updateField(
-                                        "Status",
+                                        "status",
                                         e.target.value
                                     )
                                 }

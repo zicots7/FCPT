@@ -161,6 +161,17 @@ export default function EditProject({id, project,onSuccess,className}:Props) {
                                       )
                                   }
                               />
+                                <input
+                                  className="form-control mb-2"
+                                  placeholder="totalValue"
+                                  value={form.totalValue}
+                                  onChange={
+                                      e=>updateField(
+                                          "totalValue",
+                                          e.target.value
+                                      )
+                                  }
+                              />
   
   
                                <select className='mt-2 mb-3'
@@ -198,7 +209,7 @@ export default function EditProject({id, project,onSuccess,className}:Props) {
                                     Complete
                                 </option>
                             </select>
-                                
+                              
   
                           </div>
   

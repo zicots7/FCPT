@@ -14,13 +14,10 @@ interface Props {
 }
 
 export default function SinglePayment({onSuccess,className,payments,milestone}:Props) {
-  const [open,setOpen] =useState(false);
+
   const [loading,setLoading]=useState<boolean>(false);
-  const [reload,setReload] = useState(false);
   const {user}=useAuth();
-      const refreshClients = ()=>{
-          setReload(!reload);
-      };
+  
  if(loading){
     return (
         <tbody>
@@ -39,9 +36,9 @@ export default function SinglePayment({onSuccess,className,payments,milestone}:P
                     <span className="fw-semibold">Payment History</span>
                     {user?.role=="admin"&&(
                             <AddPayment
-                            milestone={milestone}
-                            className={className}
-                            onSuccess={refreshClients}
+                            milestones={milestone}
+                            className="btn btn-sm btn-outline-primary me-1"
+                            onSuccess={onSuccess}
                         />
                     )}
                      
@@ -69,7 +66,7 @@ export default function SinglePayment({onSuccess,className,payments,milestone}:P
 
                             ):(payments.map((payment,index)=>(
                             <tr key={index}>
-                                {payments.length > 0}
+                               
                                 <td >
                                     { payment.datePaid}
                                 </td>
@@ -87,13 +84,14 @@ export default function SinglePayment({onSuccess,className,payments,milestone}:P
 
                                   <EditPayment
                                    className="btn btn-sm btn-outline-primary me-1"
-                                   onSuccess={refreshClients}
-                                   id={payment}
+                                   onSuccess={onSuccess}
+                                   payment={payment}
                                    />
                                   <DeletePayment 
+                                  title={payment.datePaid}
                                   className="btn btn-sm btn-outline-danger"
-                                  onSuccess={refreshClients}
-                                  id={payment}
+                                  onSuccess={onSuccess}
+                                  id={payment.id}
                                   />
                                  </td>
                             )}

@@ -6,6 +6,7 @@ import EditProject from './EditProject';
 import DeleteProject from './DeleteProject';
 import { getProject } from '../Apis/Project/getProject';
 import ProjectsDetails from './ProjectsDetails';
+import Invoice from '../Invoice/Invoice';
 
 interface Props{
     reload:boolean;
@@ -86,14 +87,14 @@ if(loading){
                <td className="text-muted small">{project.startDate}</td>
                <td className="text-muted small">{project.deadline}</td>
                <td>
-                 {project.Status === "Delivered" ? (
+                 {project.status === "Delivered" ? (
                    <span className="badge bg-success">Delivered</span>
-                 ) : project.Status === "Complete" ? (
+                 ) : project.status === "Complete" ? (
                    <span className="badge bg-primary">Complete</span>
-                 ) : project.Status === "Pending" ? (
+                 ) : project.status === "Pending" ? (
                    <span className="badge bg-warning text-dark">Pending</span>
                  ) : (
-                   <span className="badge bg-secondary">{project.Status}</span>
+                   <span className="badge bg-secondary">{project.status}</span>
                  )}
                </td>
                <td className="text-muted">{project.totalValue}</td>
@@ -113,9 +114,13 @@ if(loading){
                    onSuccess={tryFetchProject}
                    title={project.title}
                  />
+                 
                  </>
                  )}
-                
+                <Invoice
+                 className="btn btn-sm btn-outline-info me-1"
+                  pid={project.pid}
+                 />
                 <ProjectsDetails
                  className="btn btn-sm btn-outline-success me-1"
                    onSuccess={tryFetchProject}
