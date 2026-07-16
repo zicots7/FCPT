@@ -117,10 +117,9 @@ if(loading){
                  )}
                 
                 <ProjectsDetails
-                 className="btn btn-sm btn-outline-danger me-1"
-                   id={project.pid}
+                 className="btn btn-sm btn-outline-success me-1"
                    onSuccess={tryFetchProject}
-                   title={project.title}
+                   projects={project}
                  />
                     
                 

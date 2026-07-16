@@ -14,8 +14,12 @@ import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.ResourceNotFoundExcep
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,11 +32,20 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
     private final MilestoneRepository milestoneRepository;
     private final ProjectsRepository projectsRepository;
-
+    private final ObjectMapper objectMapper;
+    private final RedisTemplate<String, Object> redisTemplate;
     public List<PaymentResponseDTO> getPayment(Long id) {
-        return paymentRepository.findAllByProjectId(id).stream()
-                .map(paymentMapper::toResponse)
-                .toList();
+        String key= "payment:project:" +id;
+        Object cached= redisTemplate.opsForValue().get(key);
+        if(cached!=null){
+            return objectMapper.convertValue(cached, new TypeReference<List<PaymentResponseDTO>>() {});
+        }else{
+            List<PaymentResponseDTO>payments =paymentRepository.findAllByProjectId(id).stream()
+                    .map(paymentMapper::toResponse)
+                    .toList();
+            redisTemplate.opsForValue()
+                    .set(key, payments, Duration.ofMinutes(5));
+        return payments; }
     }
 
     public List<PaymentResponseDTO> getPayments() {
@@ -82,6 +95,7 @@ public class PaymentService {
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Payment does not exist"));
         Projects project = milestone.getProject();
+
         // 1. Capture old state
         Long oldAmount = payment.getAmountPaid();
         Long newAmount = request.amountPaid();
@@ -103,7 +117,8 @@ public class PaymentService {
             project.setTotalValue(project.getTotalValue() - milestone.getAmount());
             projectsRepository.save(project);
         }
-
+        String key= "payment:project:" +project.getPid();
+        redisTemplate.delete(key);
         // 6. Save updates
         payment.setAmountPaid(newAmount);
         payment.setPaymentMethod(request.paymentMethod());
@@ -114,6 +129,7 @@ public class PaymentService {
     }
     @Transactional
     public void deletePayment(Long id) {
+
         Payment payment= paymentRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Payment does not exist"));
         paymentRepository.deleteById(payment.getId());

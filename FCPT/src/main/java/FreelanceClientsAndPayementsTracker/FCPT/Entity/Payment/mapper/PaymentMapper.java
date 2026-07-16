@@ -11,7 +11,8 @@ public class PaymentMapper {
                payment.getDatePaid(),
                payment.getPaymentMethod(),
                payment.getId(),
-               payment.getMilestone().getId()
+               payment.getMilestone().getId(),
+               payment.getMilestone().getDescription()
        );
 
     }

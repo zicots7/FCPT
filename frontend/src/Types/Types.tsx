@@ -13,25 +13,16 @@ export interface User{
     isActive:boolean;
 };
 type Status= "Complete"|"Pending"|"Delivered";
-export interface CreateProjects{
-    title:string,
-    description:string,
-    startDate:string,
-    deadline:string,
-    status:Status,
-    totalValue:number,
-    client:string,
-    clientId:number
-
-};
+export type CreateProjects = Omit<Projects, "pid">;
 export interface Projects{
     pid:number,
     title:string,
     description:string,
     startDate:string,
     deadline:string,
-    status:Status,
+    Status:Status,
     totalValue:number,
+    platform:Platform,
     client:string,
     clientId:number
 
@@ -61,32 +52,19 @@ export interface LoginResponse {
     role:string;
     id:any;
 };
-export interface UpdateClientRequest {
-    username:string;
-    email:string;
-    password?:string;
-    firstName:string;
-    lastName:string;
-    company:string;
-    platform:Platform;
+export type UpdateClientRequest= Omit<Clients,"userId">;
 
-};
-export interface CreateClientRequest {
-    username:string;
-    firstName:string;
-    lastName:string;
-    password:string;
-    email:string;
-    company:string;
-    platform:Platform;
-};
+export type CreateClientRequest=Omit<Clients,"userId">;
+
 type PaymentMethod= "UPI"|"CARD"|"CASH"|"NET_BANKING"| "CRYPTO";
 export interface Payment{
     amountPaid:number;
     datePaid:string;
     paymentMethod:PaymentMethod;
     milestoneId:number;
+    milestone:string;
 };
+
 
 type PaidStatus="Yes"|"No";
 export interface Milestone{
@@ -97,13 +75,144 @@ export interface Milestone{
     isPaid:PaidStatus,
     projectNameId:number
 };
+export enum InteractionType {
+    revision_request = "revision_request",
+    contract = "contract",
+    requirement = "requirement",
+    dispute = "dispute",
+    general_note = "general_note"
+}
+export type Log=|{
+        pid: number;
 
-export interface Log{
-    logId:string;
-    pid:number;
-    message:string;
-    timestamp:string;
-    tags:string;
-    interactionType:string;
-    details:Map<String, Object>;
+        message: string;
+
+        tags: string;
+
+        timestamp: string;
+
+        interactionType: InteractionType.revision_request;
+
+        details: RevisionRequestDetails;
+    }|{
+        pid: number;
+
+        message: string;
+
+        tags: string;
+
+        timestamp: string;
+
+        interactionType: InteractionType.contract;
+
+        details: ContractDetails;
+    }
+    | {
+        pid: number;
+
+        message: string;
+
+        tags: string;
+
+        timestamp: string;
+
+        interactionType: InteractionType.requirement;
+
+        details: RequirementDetails;
+    }
+    | {
+        pid: number;
+
+        message: string;
+
+        tags: string;
+
+        timestamp: string;
+
+        interactionType: InteractionType.dispute;
+
+        details: DisputeDetails;
+    }
+    | {
+        pid: number;
+
+        message: string;
+
+        tags: string;
+
+        timestamp: string;
+
+        interactionType: InteractionType.general_note;
+
+        details: GeneralNoteDetails;
+    };
+
+
+// Response from backend
+
+export type LogsResponseDTO = Log & {
+
+    logId: string;
+
 };
+
+export interface RevisionRequestDetails {
+
+    message: string;
+
+    revisionNumber: string;
+
+    affectedPages: string[];
+
+    priority: Priority;
+}
+
+
+// Contract Details
+export interface ContractDetails {
+
+    contractValue: string;
+
+    paymentTerms: string;
+
+    deliverables: string[];
+
+    signedDate: string;
+}
+
+
+// Requirement Details
+export interface RequirementDetails {
+
+    description: string;
+
+    techPreference: string;
+
+    budgetFlexible: boolean;
+
+    deadlineFlexible: boolean;
+}
+
+
+// Dispute Details
+export interface DisputeDetails {
+
+    reason: string;
+
+    amountDisputed: string;
+
+    resolutionStatus: string;
+}
+
+
+// General Note Details
+export interface GeneralNoteDetails {
+
+    message: string;
+
+    tags: string[];
+}
+ type Priority= "Low"|"Medium"|"High";
+
+
+                                  

@@ -9,9 +9,13 @@ import FreelanceClientsAndPayementsTracker.FCPT.Entity.Projects.mapper.ProjectMa
 import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import java.time.Duration;
 import java.util.List;
+
 
 @Service
 @AllArgsConstructor
@@ -19,7 +23,8 @@ public class ProjectsService {
     private final ProjectsRepository projectsRepository;
     private final ClientsRepository clientsRepository;
     private final ProjectMapper projectMapper;
-
+    private final ObjectMapper objectMapper;
+    private final RedisTemplate<String, Object> redisTemplate;
     @Transactional
     public ProjectsResponseDTO createProject(ProjectsRequestDTO request){
         Clients client = clientsRepository.findById(request.clientId())
@@ -48,6 +53,7 @@ public class ProjectsService {
         projects.setStartDate(request.startDate());
         projects.setDeadline(request.deadline());
         projects.setTotalValue(request.totalValue());
+        redisTemplate.delete("project:client:" + projects.getClient().getId());
         return projectMapper.toResponse(projectsRepository.save(projects));
     }
     @Transactional
@@ -57,10 +63,27 @@ public class ProjectsService {
         }
     }
     public List<ProjectsResponseDTO> getProject(Long id){
-        return projectsRepository.findByClientId(id).stream()
-                .map(projectMapper::toResponse)
-                .toList();
+        String key= "project:client:" +id;
+        Object cached = redisTemplate.opsForValue().get(key);
 
+        if(cached!=null){
+
+            return objectMapper.convertValue(
+                    cached, new TypeReference<List<ProjectsResponseDTO>>(){}
+            );
+        }else {
+
+            List<ProjectsResponseDTO> projects =
+                    projectsRepository.findByClientId(id)
+                            .stream()
+                            .map(projectMapper::toResponse)
+                            .toList();
+
+
+        redisTemplate.opsForValue()
+                .set(key, projects, Duration.ofMinutes(5));
+
+        return projects;}
     }
 
     public List<ProjectsResponseDTO> getProjects(){

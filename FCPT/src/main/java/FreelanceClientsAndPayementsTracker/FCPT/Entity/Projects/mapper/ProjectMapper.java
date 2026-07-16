@@ -16,6 +16,7 @@ public ProjectsResponseDTO toResponse(Projects projects){
             projects.getStatus(),
             projects.getTotalValue(),
             projects.getClient().getFirstName()+" "+projects.getClient().getLastName(),
+            projects.getClient().getPlatform(),
             projects.getClient().getId()
     );
 }

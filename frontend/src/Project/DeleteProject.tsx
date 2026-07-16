@@ -30,7 +30,7 @@ const handleDelete = async()=>{
    return(
     <button className={className}
     onClick={handleDelete}>
-            Delete
+            Delete Project
         </button>
    )
 }

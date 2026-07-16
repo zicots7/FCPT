@@ -2,18 +2,16 @@ package FreelanceClientsAndPayementsTracker.FCPT.Entity.Logs;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
 import java.time.LocalDateTime;
 import java.util.Map;
+
 
 @Document(collection="logs")
 @Builder
 @Data
 public class Logs {
-
     @Id
     private String id;
     @Field("log_id")
@@ -25,6 +23,6 @@ public class Logs {
     private LocalDateTime timestamp;
     private String tags;
     @Field("interaction_type")
-    private String interactionType;
-    private Map<String, Object> details;
+    private InteractionType interactionType;
+    private Map<String,Object> details;
 }

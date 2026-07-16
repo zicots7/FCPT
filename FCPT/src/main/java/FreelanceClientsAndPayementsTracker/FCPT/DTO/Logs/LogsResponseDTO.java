@@ -1,5 +1,7 @@
 package FreelanceClientsAndPayementsTracker.FCPT.DTO.Logs;
 
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Logs.InteractionType;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -9,6 +11,6 @@ public record LogsResponseDTO(
          String message,
          LocalDateTime timestamp,
          String tags,
-         String interactionType,
-         Map<String, Object>details
+         InteractionType interactionType,
+         Map<String,Object> details
 ){ }

@@ -40,7 +40,7 @@ public class MilestoneController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/admin/update/{pid}")
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<MilestoneResponseDTO>createMilestone(
             @PathVariable Long id,
             @RequestBody

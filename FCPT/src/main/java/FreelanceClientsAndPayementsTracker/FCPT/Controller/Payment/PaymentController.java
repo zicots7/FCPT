@@ -41,7 +41,7 @@ public class PaymentController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PutMapping("/admin/update/{Id}")
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<PaymentResponseDTO>updatePayment(
             @PathVariable Long id,
             @RequestBody
@@ -51,7 +51,7 @@ public class PaymentController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @DeleteMapping("/admin/delete/{Id}")
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<PaymentResponseDTO>deletePayment(
             @PathVariable Long id
     ){

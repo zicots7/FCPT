@@ -11,8 +11,12 @@ import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.ResourceNotFoundExcep
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
 
+import java.time.Duration;
 import java.util.List;
 
 @Service
@@ -22,11 +26,21 @@ public class MilestoneService {
     private final MilestoneRepository milestoneRepository;
     private  final ProjectsRepository projectsRepository;
     private final MilestoneMapper milestoneMapper;
-    
-    public List<MilestoneResponseDTO> getMilestone(Long pid) {
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final ObjectMapper objectMapper;
 
-        return milestoneRepository.findAllByProjectPid(pid).stream()
+    public List<MilestoneResponseDTO> getMilestone(Long pid) {
+        String key= "project:milestone:" + pid;
+        Object cached = redisTemplate.opsForValue().get(key);
+        if(cached!=null){
+            return objectMapper.convertValue(cached, new TypeReference<List<MilestoneResponseDTO>>() {
+            });
+
+        }else{
+        List<MilestoneResponseDTO>milestones=milestoneRepository.findAllByProjectPid(pid).stream()
                 .map(milestoneMapper::toResponse).toList();
+        redisTemplate.opsForValue().set(key,milestones, Duration.ofMinutes(5));
+        return milestones;}
     }
 
     public List<MilestoneResponseDTO> getMilestones() {
@@ -55,13 +69,14 @@ public class MilestoneService {
 
     @Transactional
     public MilestoneResponseDTO updateMilestone(Long id, @Valid MilestoneRequestDTO request) {
+
         Milestone milestone = milestoneRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Milestone does not exist"));
         Projects projects = milestone.getProject();
         // 1. Capture the OLD status BEFORE changing it
         PaidStatus oldStatus = milestone.getIsPaid();
         PaidStatus newStatus = request.isPaid();
-
+        String key = "project:milestone:" + projects.getPid();
         // 2. Logic to update Project total ONLY if status changed
         if (oldStatus != newStatus) {
             if (newStatus == PaidStatus.Yes) {
@@ -74,6 +89,7 @@ public class MilestoneService {
             projectsRepository.save(projects);
         }
         // Apply other updates
+        redisTemplate.delete(key);
         milestone.setAmount(request.amount());
         milestone.setDescription(request.description());
         milestone.setProject(projects);

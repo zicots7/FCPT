@@ -21,7 +21,7 @@ export default function AddProject({className,onSuccess}:Props) {
               startDate:"",
               deadline:"",
               Status:"Pending",
-              totalValue:Number(""),
+              totalValue:0,
               
           });
   
@@ -52,7 +52,7 @@ export default function AddProject({className,onSuccess}:Props) {
               description:"",
               startDate:"",
               deadline:"",
-              status:"Pending",
+              Status:"Pending",
               totalValue:Number(""),
               client:"",
               });
@@ -213,11 +213,11 @@ export default function AddProject({className,onSuccess}:Props) {
                                 <select
                                 className="form-select"
 
-                                value={form.status}
+                                value={form.Status}
 
                                 onChange={
                                     e=>updateField(
-                                        "status",
+                                        "Status",
                                         e.target.value
                                     )
                                 }

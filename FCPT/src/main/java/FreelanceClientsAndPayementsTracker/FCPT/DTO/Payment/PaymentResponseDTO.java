@@ -7,5 +7,6 @@ public record PaymentResponseDTO(
         LocalDateTime datePaid,
         PaymentMethod paymentMethod,
         Long id,
-        Long milestoneId
+        Long milestoneId,
+        String milestone
 ) {}

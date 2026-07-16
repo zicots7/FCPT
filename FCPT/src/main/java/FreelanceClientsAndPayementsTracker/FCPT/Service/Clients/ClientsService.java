@@ -13,6 +13,7 @@ import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.ResourceNotFoundExcep
 import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.UserAlreadyExistsException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class ClientsService {
     private final PasswordEncoder passwordEncoder;
     private final ClientsRepository clientsRepository;
     private final ClientMapper clientMapper;
+    private final RedisTemplate<String, Object> redisTemplate;
 
 
     @Transactional
@@ -89,6 +91,7 @@ public class ClientsService {
     }
 
     public List<ClientResponseDTO> getClients(){
+
         return clientsRepository.findAll().stream()
                 .map(clientMapper::toResponse)
                 .toList();

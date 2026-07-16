@@ -15,6 +15,7 @@ public class InvoiceService {
     private final PdfServiceClient pdfService;
 
     public byte[] generateInvoiceForProject(Long projectId) {
+
         // 1. Fetch data from your database (PostgreSQL/JPA)
         Projects project = projectsRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
