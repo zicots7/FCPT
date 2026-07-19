@@ -18,6 +18,7 @@ interface Props {
 export default function SinglePayment({onSuccess,className,payments,milestone,pid}:Props) {
 
   const [loading,setLoading]=useState<boolean>(false);
+  const [payment,setPayments]=useState<Payment[]>([]);
   const {user}=useAuth();
   
  if(loading){

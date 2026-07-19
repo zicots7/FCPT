@@ -31,17 +31,18 @@ export default function AddMilestone({className,pid,onSuccess}:pros) {
         };
          const handleSubmit = async()=>{
             try{
-              console.log(form);
-                await postMilestones(form);
-                setOpen(false);
+              await postMilestones(form);
+                
                 setForm({
                   description:"",
                   amount:0,
                   dueDate:"",
                   isPaid:"No",
                   projectNameId:pid
-                });
-                onSuccess();
+                }
+            );
+            setOpen(false);
+            onSuccess();
             }catch(error){
                 console.log(error);
                 alert("Failed to create Milestone");
@@ -167,7 +168,7 @@ export default function AddMilestone({className,pid,onSuccess}:pros) {
                         <div className="modal-footer">
                             <button
                                 className="btn btn-primary"
-                                onClick={()=>handleSubmit()}
+                                onClick={()=>{handleSubmit()}}
                             >
                              Add
                             </button>

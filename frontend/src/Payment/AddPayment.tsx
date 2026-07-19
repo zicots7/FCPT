@@ -185,7 +185,7 @@ export default function AddPayment({milestones,className,onSuccess}:props) {
                         <div className="modal-footer">
                             <button
                                 className="btn btn-primary"
-                                onClick={()=>handleSubmit()}
+                                onClick={()=>{handleSubmit()}}
                             >
                              Add
                             </button>

@@ -37,14 +37,12 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         let milestone:Milestone[]=[];
         let paymentdata:Payment[]=[];
         let logs:LogsResponseDTO[]=[];
-        if(user){
-            if(!user) return;
-          milestone= await getMilestones(projects.pid);
-         paymentdata = await getPayment(projects.pid);
-          
-          logs= await getLogs(projects.pid);
+         if(!user) return;
+        milestone= await getMilestones(projects.pid);
+        paymentdata = await getPayment(projects.pid);
+        logs= await getLogs(projects.pid);
 
-        }
+        
         const totalPaid = paymentdata.reduce(
             (sum, payment) => sum + payment.amountPaid,
             0
@@ -67,7 +65,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         }
       },[user, projects.pid]);
       const refreshProject = async ()=>{
-    await fetchDetails();
+         await fetchDetails();
 };
   return (
     <>
@@ -76,6 +74,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
               onClick={() => {
                 setOpen(true);
                 fetchDetails();
+               
               }}
           >
       Project Details
