@@ -19,7 +19,7 @@ export default function EditProject({id, project,onSuccess,className}:Props) {
               description: project.description,
               startDate: project.startDate,
               deadline: project.deadline,
-              status:"Pending",
+              Status:project.Status,
               totalValue:project.totalValue,
               client: project.client,
               clientId:project.clientId  
@@ -190,11 +190,11 @@ export default function EditProject({id, project,onSuccess,className}:Props) {
                                 <select
                                 className="form-select"
 
-                                value={form.status}
+                                value={form.Status}
 
                                 onChange={
                                     e=>updateField(
-                                        "status",
+                                        "Status",
                                         e.target.value
                                     )
                                 }
@@ -219,9 +219,7 @@ export default function EditProject({id, project,onSuccess,className}:Props) {
                           className="btn btn-secondary"
                           onClick={() => {
                               setOpen(false);
-                              setTimeout(() => {
-                              window.location.reload();
-                              }, 150);
+                             
                           }}
                           >
                           Cancel

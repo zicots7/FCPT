@@ -53,6 +53,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         setPayments(paymentdata);
         setMilestones(milestone);
         setLogs(logs);
+        
       }catch(e){
         console.log(e);
       }finally{
@@ -62,8 +63,9 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
       useEffect(()=>{
         if(user){
           fetchDetails();
+          
         }
-      },[user, projects.pid]);
+      },[user]);
       const refreshProject = async ()=>{
          await fetchDetails();
 };
@@ -73,7 +75,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         className={className}
               onClick={() => {
                 setOpen(true);
-                fetchDetails();
+                refreshProject();
                
               }}
           >
@@ -268,7 +270,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
                     className="btn btn-sm btn-outline-primary me-1"
                     id={projects.pid}
                     project={projects}
-                    onSuccess={refreshProject}
+                    onSuccess={onSuccess}
                     />
 
                     <DeleteProject
