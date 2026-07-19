@@ -63,6 +63,7 @@ export interface Payment{
     datePaid:string;
     paymentMethod:PaymentMethod;
     milestoneId:number;
+    milestone?:string;
 };
 export type CreatePayment=Omit<Payment,"id">;
 
@@ -73,7 +74,7 @@ export interface Milestone{
     amount:number;
     dueDate:string;
     isPaid:PaidStatus,
-    projectNameId:number
+    projectNameId?:number
 };
 export type CreateMilestone= Omit<Milestone,"id">;
 export enum InteractionType {

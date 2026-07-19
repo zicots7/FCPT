@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import type { Log, Milestone, Payment, Projects } from '../Types/Types';
+import  {useState } from 'react'
+import type { Milestone,  Projects } from '../Types/Types';
 import { useAuth } from '../Apis/Auth/AuthContextProvider';
-import { getMilestones } from '../Apis/Milestone/getMilestone';
 import AddMilestone from './AddMilestone';
 import EditMilestone from './EditMilestone';
 import DeleteMilestone from './DeleteMilestone';
