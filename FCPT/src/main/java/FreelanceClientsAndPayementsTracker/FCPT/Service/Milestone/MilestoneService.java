@@ -6,6 +6,7 @@ import FreelanceClientsAndPayementsTracker.FCPT.DTO.Milestone.MilestoneResponseD
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Milestone.Milestone;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Milestone.PaidStatus;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Milestone.mapper.MilestoneMapper;
+import FreelanceClientsAndPayementsTracker.FCPT.Entity.Payment.Payment;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Projects.Projects;
 import FreelanceClientsAndPayementsTracker.FCPT.Exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
@@ -101,6 +102,11 @@ public class MilestoneService {
     public void deleteMilestone(Long id) {
         Milestone milestone = milestoneRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Milestone does not exist"));
+
+        Long projectId = milestone
+                .getProject()
+                .getPid();
         milestoneRepository.deleteById(milestone.getId());
+        redisTemplate.delete("project:milestone:" + projectId);
     }
 }
