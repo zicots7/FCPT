@@ -63,7 +63,6 @@ export interface Payment{
     datePaid:string;
     paymentMethod:PaymentMethod;
     milestoneId:number;
-    milestone?:string;
 };
 export type CreatePayment=Omit<Payment,"id">;
 

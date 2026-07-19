@@ -122,6 +122,8 @@ public class PaymentService {
         // 6. Save updates
         payment.setAmountPaid(newAmount);
         payment.setPaymentMethod(request.paymentMethod());
+        payment.setDatePaid(request.datePaid());
+        payment.setMilestone(milestone);
         paymentRepository.save(payment);
         milestoneRepository.save(milestone);
 
@@ -129,10 +131,16 @@ public class PaymentService {
     }
     @Transactional
     public void deletePayment(Long id) {
-        
-        Payment payment= paymentRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Payment does not exist"));
-        paymentRepository.deleteById(payment.getId());
+
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Payment does not exist"));
+
+        Long projectId = payment.getMilestone()
+                .getProject()
+                .getPid();
+
+        paymentRepository.delete(payment);
+        redisTemplate.delete("payment:project:" + projectId);
 
     }
 }

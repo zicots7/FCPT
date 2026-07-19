@@ -197,6 +197,7 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
         
           <SinglePayment
           payments={payments}
+          pid={projects.pid}
           milestone={milestones}
           onSuccess={refreshProject}
           />

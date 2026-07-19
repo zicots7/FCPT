@@ -4,16 +4,18 @@ import { useAuth } from '../Apis/Auth/AuthContextProvider';
 import AddPayment from './AddPayment';
 import DeletePayment from './DeletePayment';
 import EditPayment from './EditPayment';
+import Projects from '../Project/Projects';
 
 
 interface Props {
     payments:Payment[]
     milestone:Milestone[]
+    pid:number;
     className?:string;
     onSuccess:()=>void;
 }
 
-export default function SinglePayment({onSuccess,className,payments,milestone}:Props) {
+export default function SinglePayment({onSuccess,className,payments,milestone,pid}:Props) {
 
   const [loading,setLoading]=useState<boolean>(false);
   const {user}=useAuth();
@@ -85,6 +87,7 @@ export default function SinglePayment({onSuccess,className,payments,milestone}:P
                                   <EditPayment
                                    className="btn btn-sm btn-outline-primary me-1"
                                    onSuccess={onSuccess}
+                                   project={pid}
                                    payment={payment}
                                    />
                                   <DeletePayment 
