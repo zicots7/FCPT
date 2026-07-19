@@ -85,6 +85,8 @@ public class PaymentService {
                 .datePaid(request.datePaid())
                 .milestone(milestone)
                 .build();
+        String key= "payment:project:" +project.getPid();
+        redisTemplate.delete(key);
         return paymentMapper.toResponse(paymentRepository.save(payment));
     }
 

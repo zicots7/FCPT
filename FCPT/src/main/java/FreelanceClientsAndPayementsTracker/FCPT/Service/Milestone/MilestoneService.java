@@ -64,7 +64,8 @@ public class MilestoneService {
             projects.setTotalValue(projects.getTotalValue() - milestone.getAmount());
             projectsRepository.save(projects);
         }
-
+        String key = "project:milestone:" + projects.getPid();
+        redisTemplate.delete(key);
         return milestoneMapper.toResponse(milestoneRepository.save(milestone));
     }
 
@@ -90,6 +91,7 @@ public class MilestoneService {
             projectsRepository.save(projects);
         }
         // Apply other updates
+        redisTemplate.delete("payment:project:" + projects.getPid());
         redisTemplate.delete(key);
         milestone.setAmount(request.amount());
         milestone.setDescription(request.description());
@@ -108,5 +110,6 @@ public class MilestoneService {
                 .getPid();
         milestoneRepository.deleteById(milestone.getId());
         redisTemplate.delete("project:milestone:" + projectId);
+        redisTemplate.delete("payment:project:" + projectId);
     }
 }

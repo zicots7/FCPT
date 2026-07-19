@@ -10,7 +10,7 @@ public record ProjectsRequestDTO(
         String description,
         LocalDateTime startDate,
         LocalDateTime deadline,
-        Status status,
+        Status Status,
         Long totalValue,
         Long clientId
 

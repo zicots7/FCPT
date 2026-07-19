@@ -79,22 +79,22 @@ if(loading){
              </td>
            </tr>
          ) : (
-           project.map((project, index) => (
-             <tr key={project.pid}>
+           project.map((project,index ) => (
+             <tr key={index}>
                <td className="fw-semibold">{project.title}</td>
                <td className="fw-semibold">{project.client}</td>
                <td className="text-muted">{project.description}</td>
                <td className="text-muted small">{project.startDate}</td>
                <td className="text-muted small">{project.deadline}</td>
                <td>
-                 {project.status === "Delivered" ? (
+                 {project.Status === "Delivered" ? (
                    <span className="badge bg-success">Delivered</span>
-                 ) : project.status === "Complete" ? (
+                 ) : project.Status === "Complete" ? (
                    <span className="badge bg-primary">Complete</span>
-                 ) : project.status === "Pending" ? (
+                 ) : project.Status === "Pending" ? (
                    <span className="badge bg-warning text-dark">Pending</span>
                  ) : (
-                   <span className="badge bg-secondary">{project.status}</span>
+                   <span className="badge bg-secondary">{project.Status}</span>
                  )}
                </td>
                <td className="text-muted">{project.totalValue}</td>

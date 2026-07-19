@@ -20,7 +20,7 @@ export interface Projects{
     description:string,
     startDate:string,
     deadline:string,
-    status:Status,
+    Status:Status,
     totalValue:number,
     platform:Platform,
     client:string,

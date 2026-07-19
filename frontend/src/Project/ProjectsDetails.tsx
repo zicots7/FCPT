@@ -112,9 +112,9 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
                         <span className="fw-semibold text-dark p-2">
                         { projects.client }
                         </span>
-                      {projects.status === "Pending" ? (
+                      {projects.Status === "Pending" ? (
                         <span className="badge bg-warning text-dark fs-8">Pending</span>
-                    ) : projects.status === "Complete" ? (
+                    ) : projects.Status === "Complete" ? (
                         <span className="badge bg-success fs-8">Completed</span>
                     ) : (
                         <span className="badge bg-primary fs-8">Delivered</span>
@@ -239,9 +239,9 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
                       )}
           
                     
-                      {projects.status === "Pending" ? (
+                      {projects.Status === "Pending" ? (
                         <span className="badge bg-warning text-dark ms-2">Pending</span>
-                    ) : projects.status === "Complete" ? (
+                    ) : projects.Status === "Complete" ? (
                         <span className="badge bg-success ms-2">Completed</span>
                     ) : (
                         <span className="badge bg-primary ms-2">Delivered</span>

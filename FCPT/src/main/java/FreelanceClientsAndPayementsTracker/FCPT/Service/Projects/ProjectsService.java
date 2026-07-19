@@ -32,12 +32,13 @@ public class ProjectsService {
         Projects projects = Projects.builder()
                 .title(request.title())
                 .description(request.description())
-                .status(request.status())
+                .status(request.Status())
                 .client(client)
                 .startDate(request.startDate())
                 .deadline(request.deadline())
                 .totalValue(request.totalValue())
                 .build();
+        redisTemplate.delete("project:client:" + projects.getClient().getId());
         return projectMapper.toResponse(projectsRepository.save(projects));
     }
     @Transactional
@@ -49,7 +50,7 @@ public class ProjectsService {
         projects.setTitle(request.title());
         projects.setClient(newClient);
         projects.setDescription(request.description());
-        projects.setStatus(request.status());
+        projects.setStatus(request.Status());
         projects.setStartDate(request.startDate());
         projects.setDeadline(request.deadline());
         projects.setTotalValue(request.totalValue());
@@ -58,9 +59,12 @@ public class ProjectsService {
     }
     @Transactional
     public void deleteProject(Long id){
-        if(projectsRepository.existsByPid(id)){
-            projectsRepository.deleteByPid(id);
-        }
+        Projects project= projectsRepository.findByPid(id).orElseThrow(()-> new ResourceNotFoundException("Project does not exist !"));
+            projectsRepository.deleteByPid(project.getPid());
+            redisTemplate.delete("project:client:" + project.getClient().getId());
+            redisTemplate.delete("project:milestone:" + id);
+            redisTemplate.delete("payment:project:" + id);
+
     }
     public List<ProjectsResponseDTO> getProject(Long id){
         String key= "project:client:" +id;
