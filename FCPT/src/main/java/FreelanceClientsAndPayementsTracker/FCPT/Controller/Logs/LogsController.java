@@ -38,7 +38,7 @@ public class LogsController {
     }
 
     @PreAuthorize("hasAuthority('admin')")
-    @PostMapping("/admin/delete/{logId}")
+    @DeleteMapping("/admin/delete/{logId}")
     public ResponseEntity<LogsResponseDTO>deleteLog(@PathVariable String logId){
         logsService.deleteLogs(logId);
         return ResponseEntity.noContent().build();

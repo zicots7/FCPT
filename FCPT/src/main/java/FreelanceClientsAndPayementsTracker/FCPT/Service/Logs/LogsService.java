@@ -37,7 +37,13 @@ public class LogsService {
     public LogsResponseDTO createLog(
             LogsRequestDTO request
     ){
+        if (request.message() == null || request.message().trim().isEmpty()
+                || request.details()==null || request.details().toString().isEmpty()
+                || request.tags()==null || request.tags().trim().isEmpty()
+        ) {
 
+            throw new ResourceNotFoundException("fields cannot be empty");
+        }
         Map<String,Object> details =
                 logsDetailsConverter.validateAndConvert(
                         request.interactionType(),
@@ -74,9 +80,9 @@ public class LogsService {
 
 
     public void deleteLogs(String logId){
-        Logs logs = logsRepository.findById(logId)
+        Logs logs = logsRepository.findByLogId(logId)
                 .orElseThrow(()->new ResourceNotFoundException("log does not exist"));
-        logsRepository.deleteById(logs.getLogId());
+        logsRepository.deleteByLogId(logs.getLogId());
     }
 
 

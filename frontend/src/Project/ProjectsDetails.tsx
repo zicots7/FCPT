@@ -12,6 +12,7 @@ import SingleLog from '../Log/SingleLog';
 import AddMilestone from '../Milestone/AddMilestone';
 import AddPayment from '../Payment/AddPayment';
 import Invoice from '../Invoice/Invoice';
+import CreateLog from '../Log/CreateLog';
 
 
 
@@ -208,9 +209,14 @@ export default function ProjectsDetails({onSuccess,className,projects}:Props) {
             
                <SingleLog
                     logs={logs}
-
+                    onSuccess={refreshProject}
                     />
-         <a href="{% url 'add-logs' projects.Pid %}" className="btn btn-sm btn-primary">+ Add Log</a>
+            <CreateLog
+            project={projects}
+            onSuccess={refreshProject}
+            className="btn btn-sm btn-primary"
+            />
+
  
     </div>
     </div>

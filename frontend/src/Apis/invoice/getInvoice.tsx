@@ -9,7 +9,7 @@ export default async function getInvoice(pid:number){
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = `invoice-${pid}.pdf`; // or whatever filename you want
+  a.download = `invoice-${pid}.pdf`; 
   a.click();
 
   window.URL.revokeObjectURL(url);

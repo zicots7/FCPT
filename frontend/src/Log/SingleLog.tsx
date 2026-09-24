@@ -5,10 +5,10 @@ import DeleteLog from './DeleteLog';
 
 type props={
     logs:LogsResponseDTO[];
+    onSuccess:()=>void;
 }
-export default function SingleLog({logs}:props) {
-  const [open,setOpen] =useState(false);
-  const [loading,setLoading]=useState<boolean>(false);
+export default function SingleLog({logs,onSuccess}:props) {
+
   const [reload,setReload] = useState(false);
   const {user}=useAuth();
       const refreshLogs = ()=>{
@@ -63,12 +63,15 @@ if (logs.length === 0) {
               <small className="text-muted">
                 {new Date(log.timestamp).toLocaleString()}
               </small>
+              {user?.role=="admin"&&(
                 <DeleteLog
                  className="btn btn-sm btn-outline-danger"
-                log={log.logId}
-                onSuccess={refreshLogs}
+                logId={log.logId}
+               onSuccess={onSuccess}
 
               />
+              )}
+                
             </div>
 
             <div className="bg-light p-3 rounded shadow-sm">
