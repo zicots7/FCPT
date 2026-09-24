@@ -1,5 +1,6 @@
 package FreelanceClientsAndPayementsTracker.FCPT.DTO.Logs;
 import FreelanceClientsAndPayementsTracker.FCPT.Entity.Logs.InteractionType;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
 import java.util.Map;

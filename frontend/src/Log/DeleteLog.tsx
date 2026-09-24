@@ -1,50 +1,33 @@
-import React from 'react'
-import deleteLogs from '../Apis/Logs/deleteLogs';
-import type { Log, LogsResponseDTO } from '../Types/Types';
 
+import deleteLogs from '../Apis/Logs/deleteLogs';
 type props={
-  log:string;
+  logId:string;
   className?:string;
   onSuccess:()=>void;
 }
-export default function DeleteLog({log,className,onSuccess}:props) {
+export default function DeleteLog({logId,className,onSuccess}:props) {
 
-const DeleteLog= async()=>{
+const deleteLog= async()=>{
 const confirmDelete =
                   window.confirm(
-                      `Delete ${log.details}?`
+                      `Delete ${logId}?`
                   );
-      
-      
               if(!confirmDelete){
-                  return;
+                return;
               }
-      
-      
-              try{
-              {
-          await deleteLogs(log.logId);
-        }
-                    
-   onSuccess();
-   setTimeout(() => {
-          window.location.reload();
-      }, 200);
-      
+          try{
+          await deleteLogs(logId);
+           onSuccess();
               }catch(error){
-      
                   console.log(error);
-      
                   alert("Delete failed");
-      
               }
-      
           };
   return (
     <>
      <button
 className={className}
- onClick={DeleteLog}
+ onClick={deleteLog}
 >
  Delete
  </button>

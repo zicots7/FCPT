@@ -1,5 +1,7 @@
 package FreelanceClientsAndPayementsTracker.FCPT.Entity.Logs;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
